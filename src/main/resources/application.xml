@@ -7,10 +7,14 @@
            http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd
            http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- DataSource -->
+    <!-- Quét component nếu bạn dùng @Repository/@Service -->
+    <context:component-scan base-package="fa.training"/>
+
+    <!-- DataSource (SQL Server) -->
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="url" value="jdbc:sqlserver://localhost;database=HiHibernate_ass?useSSL=false&amp;serverTimezone=UTC"/>
+        <property name="driverClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+        <property name="url"
+                  value="jdbc:sqlserver://localhost:1433;databaseName=HiHibernate_ass;encrypt=true;trustServerCertificate=true"/>
         <property name="username" value="sa"/>
         <property name="password" value="123"/>
     </bean>
@@ -21,7 +25,8 @@
         <property name="packagesToScan" value="fa.training"/>
         <property name="hibernateProperties">
             <props>
-                <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+                <!-- Với Hibernate 5.x dùng 2012Dialect -->
+                <prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2012Dialect</prop>
                 <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.show_sql">true</prop>
                 <prop key="hibernate.format_sql">true</prop>
